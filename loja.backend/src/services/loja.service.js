@@ -8,13 +8,18 @@ class LojaService {
     return loja ? loja : {};
   }
   async deleteById(id) {
-    await database.models.Loja.destroy({ Where: { id: { [Op.eq]: id } } });
+    const deleted = await database.models.Loja.destroy({ where: { id: id } });
+    return deleted;
+  }
+  async findAll() {
+    const result = await database.models.Loja.findAll();
+    return result;
   }
   async save(loja) {
     let result = loja;
     if (loja) {
       if (loja.id && loja.id > 0) {
-        await await database.models.Loja.update(loja, {
+        result = await database.models.Loja.update(loja, {
           where: {
             id: loja.id,
           },

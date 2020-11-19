@@ -10,20 +10,20 @@ export function loja(
   action
 ) {
   switch (action.type) {
-    case lojasConstantes.CARREGAR_BUSCA_LOJAS + thrunkConstantes._FULFILLED: {
+    case lojasConstantes.CARREGAR_BUSCAS_LOJAS + thrunkConstantes._FULFILLED: {
       return { ...state, lista: action.payload };
     }
     case lojasConstantes.BUSCAR_LOJAS + thrunkConstantes._FULFILLED: {
       return { ...state, lista: action.payload };
     }
     case lojasConstantes.SALVAR_LOJAS + thrunkConstantes._FULFILLED: {
-      return { ...state, lista: action.payload, entidade: new LojaModel() };
+      return { ...state, entidade: new LojaModel() };
     }
     case lojasConstantes.CARREGAR_MANUTENCAO_LOJAS +
       thrunkConstantes._FULFILLED: {
-        let entidade = action.payload;
-        return { ...state, entidade };
-      }
+      let entidade = action.payload;
+      return { ...state, entidade };
+    }
     default:
       return state;
   }

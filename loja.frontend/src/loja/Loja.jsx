@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "../App.less";
 import { Table, Button, Breadcrumb } from "antd";
-import {EditOutlined} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { lojaController } from "../controllers/LojaController";
 
@@ -16,7 +16,7 @@ function Loja({ match }) {
     <div className="tabela">
       <Breadcrumb style={{ margin: "10px 0" }} className="breabcrumb">
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item >Loja</Breadcrumb.Item>
+        <Breadcrumb.Item>Loja</Breadcrumb.Item>
       </Breadcrumb>
       <Button
         className="botao"
@@ -40,16 +40,24 @@ function Loja({ match }) {
           key="acao"
           render={(text, record, index) => {
             return (
-              <Button
-              shape="round"
-                key={"editar" + record.id}
-                onClick={() => {
-                  lojaController.editarLoja(record.id);
-                }}
-              >
-                <EditOutlined />
-                Edição
-              </Button>
+              <Button.Group>
+                <Button
+                  key={"editar" + record.id}
+                  onClick={() => {
+                    lojaController.editarLoja(record.id);
+                  }}
+                >
+                  <EditOutlined />
+                </Button>
+                <Button
+                  key={"apagar" + record.id}
+                  onClick={() => {
+                    dispatch(lojaController.apagarLoja(record.id));
+                  }}
+                >
+                  <DeleteOutlined />
+                </Button>
+              </Button.Group>
             );
           }}
         />
@@ -64,9 +72,6 @@ function Loja({ match }) {
           }}
         >
           Adicionar
-        </Button>
-        <Button className="botao" shape="round">
-          Apagar
         </Button>
       </div>
     </div>
