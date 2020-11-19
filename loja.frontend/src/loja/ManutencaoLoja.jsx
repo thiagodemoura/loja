@@ -49,8 +49,8 @@ export default function ManutencaoLoja() {
     <div>
       <Breadcrumb style={{ margin: "0 0 30px" }} className="breabcrumb">
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/loja" >Loja</Breadcrumb.Item>
-        <Breadcrumb.Item >Manutenção Loja</Breadcrumb.Item>
+        <Breadcrumb.Item href="/loja">Loja</Breadcrumb.Item>
+        <Breadcrumb.Item>Manutenção Loja</Breadcrumb.Item>
       </Breadcrumb>
       <Form
         form={form}
@@ -61,6 +61,9 @@ export default function ManutencaoLoja() {
         validateMessages={validateMessages}
       >
         <div className="formulario">
+          <Form.Item name="id" label="Id" style={{ display: 'none' }}>
+            <Input readOnly={true} />
+          </Form.Item>
           <Form.Item
             name="nome"
             label="Nome"
