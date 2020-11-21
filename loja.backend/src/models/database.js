@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
 import Loja from "./loja";
+import Produto from "./produto";
 import mysql from "mysql2/promise";
 import configDatabase from "../config/database.config";
 import winston from "winston";
@@ -30,6 +31,7 @@ class Database {
     }
     this.models = {
       Loja: Loja.init(this.sequelize, DataTypes),
+      Produto: Produto.init(this.sequelize, DataTypes),
     };
     Object.values(this.models).forEach((model) => model.sync());
     // Run `.associate` if it exists,

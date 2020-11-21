@@ -7,6 +7,7 @@ import myParser from "body-parser";
 import expressWinston from "express-winston";
 import cookieParser from "cookie-parser";
 import LojaController from "./controllers/loja.controller";
+import ProdutoController from "./controllers/produto.controller";
 
 const app = express();
 const port = process.env.PORT || config.port;
@@ -35,6 +36,7 @@ app.use([
   }),
 ]);
 new LojaController(app);
+new ProdutoController(app)
 app.listen(port);
 
 console.log("Servidor Rodando na Porta: " + port);

@@ -1,37 +1,25 @@
 import { produtosConstantes } from '../constantes';
 import { history } from "../helpers";
 import ProdutoModel from "../models/Produto.Model";
-
-
+import FetchUtils from "../utils/Fetch.Utils";
 class ProdutoController {
-    carregarBusca(id) {
+    carregarBusca() {
+        let promise = FetchUtils.get("/api/produto");
         return {
             type: produtosConstantes.CARREGAR_BUSCAS_PRODUTO,
+            payload: promise,
         };
     }
     buscarProduto() {
-        let lista = [
-            {
-                id: 1,
-                modelo: "DELL",
-                serial: 12345,
-                descricao: "I5 / 16GB RAM / SSD 125",
-                status: "Disponivel",
-                local: "Sala Servidores",
-                quantidade: 3,
-                observacoes: "ótimo estado",
-            },
-        ];
+        let promise = FetchUtils.get("/api/produto");
         return {
             type: produtosConstantes.BUSCAR_PRODUTOS,
-            payload: lista,
+            payload: promise,
         };
     }
     salvarProduto(produto) {
         return (dispatch, getState) => {
-            let result = new Promise((res, err) => {
-                res(produto);
-            });
+            let result = FetchUtils.post("/api/produto", produto);
 
             return dispatch({
                 type: produtosConstantes.SALVAR_PRODUTOS,
@@ -44,26 +32,29 @@ class ProdutoController {
     editarProduto(id) {
         history.push(`/produto/${id}`);
     }
+    apagarProduto(id) {
+        let that = this;
+        return (dispatch, getState) => {
+            let result = FetchUtils.delete(`/api/produto/${id}`);
+            return dispatch({
+                type: produtosConstantes.APAGAR_PRODUTOS,
+                payload: result,
+            }).then((result) => {
+                return dispatch(that.carregarBusca());
+            });
+        };
+    }
+
     carregarManutencaoProduto(id) {
         return (dispatch, getState) => {
-            let result = new Promise((res, err) => {
-                let produto = null;
-                if (id === 1) {
-                    produto = {
-                        id: 1,
-                        modelo: "DELL",
-                        serial: 12345,
-                        descricao: "I5 / 16GB RAM / SSD 125",
-                        status: "Disponivel",
-                        local: "Sala Servidores",
-                        quantidade: 3,
-                        observacoes: "ótimo estado",
-                    };
-                } else {
-                    produto = new ProdutoModel();
-                }
-                res(produto);
-            });
+            let result = null;
+            if (id > 0) {
+                result = FetchUtils.get(`/api/produto/${id}`);
+            } else {
+                result = new Promise((res, err) => {
+                    res(new ProdutoModel());
+                });
+            }
 
             return dispatch({
                 type: produtosConstantes.CARREGAR_MANUTENCAO_PRODUTO,
@@ -71,7 +62,6 @@ class ProdutoController {
             });
         };
     }
-
 }
 
 export const produtoController = new ProdutoController();

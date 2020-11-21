@@ -10,18 +10,16 @@ export function produto(
     action
   ) {
     switch (action.type) {
-      case produtosConstantes.CARREGAR_BUSCAS_PRODUTO: {
-        return { ...state };
+      case produtosConstantes.CARREGAR_BUSCAS_PRODUTOS + thrunkConstantes._FULFILLED: {
+        return { ...state, lista: action.payload };
       }
-      case produtosConstantes.BUSCAR_PRODUTOS: {
+      case produtosConstantes.BUSCAR_PRODUTOS + thrunkConstantes._FULFILLED: {
         return { ...state, lista: action.payload };
       }
       case produtosConstantes.SALVAR_PRODUTOS + thrunkConstantes._FULFILLED: {
-        let lista = state.lista;
-        lista.push(action.payload);
-        return { ...state, lista };
+        return { ...state, entidade: new ProdutoModel() };
       }
-      case produtosConstantes.CARREGAR_MANUTENCAO_PRODUTO +
+      case produtosConstantes.CARREGAR_MANUTENCAO_PRODUTOS +
         thrunkConstantes._FULFILLED: {
         let entidade = action.payload;
         return { ...state, entidade };

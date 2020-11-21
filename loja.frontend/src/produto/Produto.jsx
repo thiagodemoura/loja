@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "../App.less";
 import { Table, Button, Breadcrumb } from "antd";
-import {EditOutlined} from "@ant-design/icons";
+import {EditOutlined,DeleteOutlined} from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { produtoController } from "../controllers/ProdutoController";
 
@@ -43,16 +43,24 @@ function Produto({ match }) {
           key="acao"
           render={(text, record, index) => {
             return (
+              <Button.Group>
               <Button
-                shape="round"
                 key={"editar" + record.id}
                 onClick={() => {
                   produtoController.editarProduto(record.id);
                 }}
               >
                 <EditOutlined />
-                Edição
               </Button>
+              <Button
+                key={"apagar" + record.id}
+                onClick={() => {
+                  dispatch(produtoController.apagarProduto(record.id));
+                }}
+              >
+                <DeleteOutlined />
+              </Button>
+            </Button.Group>
             );
           }}
         />
