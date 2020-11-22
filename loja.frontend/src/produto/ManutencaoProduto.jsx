@@ -61,6 +61,9 @@ export default function ManutencaoProduto() {
                 validateMessages={validateMessages}
             >
                 <div className="formulario">
+                    <Form.Item name="id" label="Id" style={{ display: 'none' }}>
+                        <Input readOnly={true} />
+                    </Form.Item>
                     <Form.Item
                         name="modelo"
                         label="Modelo"
@@ -133,14 +136,12 @@ export default function ManutencaoProduto() {
                     >
                         <Input />
                     </Form.Item>
-
-
                 </div>
-                <Button className="botao" shape="round" htmlType="submit" type="submit">
-                    Salvar
+        <Button className="botao" shape="round" htmlType="submit" type="submit">
+            Salvar
         </Button>
-                <Button className="botao" shape="round" href="/produto">
-                    Retornar
+        <Button className="botao" shape="round" href="/produto">
+            Retornar
         </Button>
             </Form>
         </div>

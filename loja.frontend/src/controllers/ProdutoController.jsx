@@ -6,7 +6,7 @@ class ProdutoController {
     carregarBusca() {
         let promise = FetchUtils.get("/api/produto");
         return {
-            type: produtosConstantes.CARREGAR_BUSCAS_PRODUTO,
+            type: produtosConstantes.CARREGAR_BUSCAS_PRODUTOS,
             payload: promise,
         };
     }
@@ -57,7 +57,7 @@ class ProdutoController {
             }
 
             return dispatch({
-                type: produtosConstantes.CARREGAR_MANUTENCAO_PRODUTO,
+                type: produtosConstantes.CARREGAR_MANUTENCAO_PRODUTOS,
                 payload: result,
             });
         };

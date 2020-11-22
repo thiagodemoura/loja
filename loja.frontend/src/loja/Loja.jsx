@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import "../App.less";
-import { Table, Button, Breadcrumb } from "antd";
+import { Table, Button, Breadcrumb, Input} from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { lojaController } from "../controllers/LojaController";
+
+const { Search } = Input;
 
 function Loja({ match }) {
   const lojaR = useSelector((state) => state.loja);
@@ -18,14 +20,16 @@ function Loja({ match }) {
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
         <Breadcrumb.Item>Loja</Breadcrumb.Item>
       </Breadcrumb>
-      <Button
-        className="botao"
-        shape="round"
-        onClick={() => {
-          dispatch(lojaController.buscarLoja());
-        }}
-      >
-        Busca
+
+      <Search placeholder="Pesquisar Loja" style={{ width: 200, margin: '10px 10px' }}/>
+        <Button
+          className="botao"
+          shape="round"
+          onClick={() => {
+            dispatch(lojaController.buscarLoja());
+          }}
+        >
+          Busca
       </Button>
       <Table rowKey="id" dataSource={lojaR.lista}>
         <Table.Column title="Id" dataIndex="id" key="id" />

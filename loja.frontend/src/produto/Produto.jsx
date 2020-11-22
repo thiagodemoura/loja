@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import "../App.less";
-import { Table, Button, Breadcrumb } from "antd";
+import { Table, Button, Breadcrumb, Input } from "antd";
 import {EditOutlined,DeleteOutlined} from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { produtoController } from "../controllers/ProdutoController";
 
+const {Search} = Input;
 function Produto({ match }) {
   const produtoR = useSelector((state) => state.produto);
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function Produto({ match }) {
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
         <Breadcrumb.Item >Produto</Breadcrumb.Item>
       </Breadcrumb>
+      <Search placeholder="Pesquisar Produto  " style={{ width: 200, margin: '10px 10px' }}/>
       <Button
         className="botao"
         shape="round"
