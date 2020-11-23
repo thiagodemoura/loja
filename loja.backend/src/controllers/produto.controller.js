@@ -10,16 +10,24 @@ export default class ProdutoController {
     app.route("/api/produto").get(this.findAll);
     //Apagar Registro
     app.route("/api/produto/:id").delete(this.deleteById);
+    app.route("/api/produto/search/:model").get(this.findByModel);
   }
 
+  
   async findById(req, res) {
-    const id = req.params.id;
+    const {id} = req.params;
     const produto = await produtoService.findById(id);
+    res.json(produto.dataValues);
+  }
+  
+  async findByModel(req, res) {
+    const {model} = req.params;
+    const produto = await produtoService.findByModel(model);
     res.json(produto.dataValues);
   }
 
   async deleteById(req, res) {
-    const id = req.params.id;
+    const {id} = req.params;
     produtoService
       .deleteById(id)
       .then(() => {
@@ -39,6 +47,7 @@ export default class ProdutoController {
       res.status(400).send({ error: "Falha no Registro " });
     }
   }
+
 
   async findAll(req, res) {
     const result = await produtoService.findAll();

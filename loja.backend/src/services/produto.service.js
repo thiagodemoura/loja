@@ -7,6 +7,10 @@ class ProdutoService {
     const produto = await database.models.Produto.findByPk(id);
     return produto ? produto : {};
   }
+  async findByModel(modelo) {
+    const result = await database.models.Produto.findAll({ where: { modelo: { [Op.like]: modelo + "%" } } });
+    return result;
+  }
   async deleteById(id) {
     const deleted = await database.models.Produto.destroy({ where: { id: id } });
     return deleted;

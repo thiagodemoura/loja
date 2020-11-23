@@ -19,17 +19,8 @@ function Produto({ match }) {
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
         <Breadcrumb.Item >Produto</Breadcrumb.Item>
       </Breadcrumb>
-      <Search placeholder="Pesquisar Produto  " style={{ width: 200, margin: '10px 10px' }}/>
-      <Button
-        className="botao"
-        shape="round"
-        onClick={() => {
-          dispatch(produtoController.buscarProduto());
-        }}
-      >
-        Busca
-        
-      </Button>
+
+      <Search placeholder="Pesquisar Produto  " onSearch={(value)=>dispatch(produtoController.buscarProdutoPorModelo(value))}  style={{ width: 200, margin: '10px 10px' }}/>
       
       <Table rowKey="id" dataSource={produtoR.lista}>
         <Table.Column title="Id" dataIndex="id" key="id" />

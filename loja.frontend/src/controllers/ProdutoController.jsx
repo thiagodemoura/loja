@@ -10,8 +10,8 @@ class ProdutoController {
             payload: promise,
         };
     }
-    buscarProduto() {
-        let promise = FetchUtils.get("/api/produto");
+    buscarProdutoPorModelo(modelo) {
+        let promise = FetchUtils.get("/api/produto/search/" + modelo);
         return {
             type: produtosConstantes.BUSCAR_PRODUTOS,
             payload: promise,
