@@ -59,6 +59,7 @@ function App() {
                 <Route path="/loja" exact component={Loja}></Route>
                 <Route path="/loja/:id" exact component={Manutencao}></Route>
                 <Route path="/produto" exact component={Produto}></Route>
+
                 <Route
                   path="/produto/:id"
                   component={ManutencaoProduto}

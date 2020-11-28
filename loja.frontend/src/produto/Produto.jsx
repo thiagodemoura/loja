@@ -20,7 +20,7 @@ function Produto({ match }) {
         <Breadcrumb.Item >Produto</Breadcrumb.Item>
       </Breadcrumb>
 
-      <Search placeholder="Pesquisar Produto  " onSearch={(value)=>dispatch(produtoController.buscarProdutoPorModelo(value))}  style={{ width: 200, margin: '10px 10px' }}/>
+      <Search placeholder="Pesquisar Produto" onSearch={(value)=>dispatch(produtoController.buscarProdutoPorModelo(value))}  style={{ width: 200, margin: '10px 10px' }}/>
       
       <Table rowKey="id" dataSource={produtoR.lista}>
         <Table.Column title="Id" dataIndex="id" key="id" />
@@ -29,7 +29,6 @@ function Produto({ match }) {
         <Table.Column title="Descrição" dataIndex="descricao" key="descricao" />
         <Table.Column title="Status" dataIndex="status" key="status" />
         <Table.Column title="Local" dataIndex="local" key="local" />
-        <Table.Column title="Quantidade" dataIndex="quantidade" key="quantidade" />
         <Table.Column title="Observacoes" dataIndex="observacoes" key="observacoes" />
         <Table.Column
           title="Ações"

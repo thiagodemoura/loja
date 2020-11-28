@@ -1,10 +1,13 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { useEffect } from "react";
 import "../App.less";
-import { Form, Input, Button, Breadcrumb } from "antd";
+import { Form, Input, Button, Breadcrumb, Tabs } from "antd";
 import { lojaController } from "../controllers/LojaController";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import LojaProduto from "./LojaProduto";
+
+const { TabPane } = Tabs;
 
 const layout = {
   labelCol: {
@@ -52,92 +55,99 @@ export default function ManutencaoLoja() {
         <Breadcrumb.Item href="/loja">Loja</Breadcrumb.Item>
         <Breadcrumb.Item>Manutenção Loja</Breadcrumb.Item>
       </Breadcrumb>
-      <Form
-        form={form}
-        {...layout}
-        name="nest-messages"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        validateMessages={validateMessages}
-      >
-        <div className="formulario">
-          <Form.Item name="id" label="Id" style={{ display: 'none' }}>
-            <Input readOnly={true} />
-          </Form.Item>
-          <Form.Item
-            name="nome"
-            label="Nome"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
+      <Tabs className="tabs" defaultActiveKey="Manutencao" style={{ margin: 30  }} size="large" >
+        <TabPane tab="Manutencao" key="manutencao" style={{marginTop: 15}}>
+          <Form
+            form={form}
+            {...layout}
+            name="nest-messages"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            validateMessages={validateMessages}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="cnpj"
-            label="CNPJ"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="rua"
-            label="Rua"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="bairro"
-            label="Bairro"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="numero"
-            label="Numero"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="telefone"
-            label="Telefone"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </div>
-        <Button className="botao" shape="round" htmlType="submit" type="submit">
-          Salvar
-        </Button>
-        <Button className="botao" shape="round" href="/loja">
-          Retornar
-        </Button>
-      </Form>
+            <div className="formulario">
+              <Form.Item name="id" label="Id" style={{ display: 'none' }}>
+                <Input readOnly={true} />
+              </Form.Item>
+              <Form.Item
+                name="nome"
+                label="Nome"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="cnpj"
+                label="CNPJ"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="rua"
+                label="Rua"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="bairro"
+                label="Bairro"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="numero"
+                label="Numero"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="telefone"
+                label="Telefone"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </div>
+          </Form>
+        </TabPane>
+        <TabPane tab="Produto" key="produto" style={{marginTop: 15}}>
+          <LojaProduto />
+        </TabPane>
+      </Tabs>
+      <Button className="botao" shape="round" htmlType="submit" type="submit">
+        Salvar
+      </Button>
+      <Button className="botao" shape="round" href="/loja">
+        Retornar
+      </Button>
     </div>
   );
 }

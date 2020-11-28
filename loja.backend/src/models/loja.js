@@ -1,4 +1,5 @@
 import { Model } from "sequelize";
+import Produto from "./produto";
 
 export default class Loja extends Model {
   static init(sequelize, DataTypes) {
@@ -42,9 +43,9 @@ export default class Loja extends Model {
       }
     );
   }
-  /*static associate(models) {
+  static associate(models) {
     return this.associations = {
-      playlists: Loja.hasMany(models[PLAYLISTS])
-    };
-  }*/
+      produtos: Loja.belongsToMany(Produto,{foreignKey:'loja_id', through:'lojas_produtos', as:'produtos'})
+    };   
+  }
 }

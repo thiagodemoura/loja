@@ -120,17 +120,6 @@ export default function ManutencaoProduto() {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        name="quantidade"
-                        label="Quantidade"
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
                         name="observacoes"
                         label="Observacoes"
                     >
