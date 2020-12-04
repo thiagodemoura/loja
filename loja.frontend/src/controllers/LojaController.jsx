@@ -63,6 +63,12 @@ class LojaController {
       });
     };
   }
+  adicionaProduto(){
+
+  }
+  removerProduto(){
+
+  }
 }
 
 export const lojaController = new LojaController();

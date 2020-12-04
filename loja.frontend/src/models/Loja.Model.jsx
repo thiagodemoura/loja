@@ -7,6 +7,7 @@ export default class LojaModel {
         this.bairro = "";
         this.numero = "";
         this.telefone = "";
+        this.produtos = [];
     }
 
 }
