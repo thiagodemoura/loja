@@ -17,6 +17,7 @@ class ProdutoController {
             payload: promise,
         };
     }
+
     salvarProduto(produto) {
         return (dispatch, getState) => {
             let result = FetchUtils.post("/api/produto", produto);

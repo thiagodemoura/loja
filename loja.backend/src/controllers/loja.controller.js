@@ -10,12 +10,18 @@ export default class LojaController {
     app.route("/api/loja").get(this.findAll);
     //Apagar Registro
     app.route("/api/loja/:id").delete(this.deleteById);
+    app.route("/api/loja/produto/search/:modelo").get(this.findProdutoByModelo);
   }
 
   async findById(req, res) {
     const id = req.params.id;
     const loja = await lojaService.findById(id);
     res.json(loja.dataValues);
+  }
+  async findProdutoByModelo(req, res) {
+    const { modelo } = req.params;
+    const produto = await lojaService.findProdutoByModelo(modelo);
+    res.json(produto.dataValues);
   }
 
   async deleteById(req, res) {

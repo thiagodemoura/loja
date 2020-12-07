@@ -6,6 +6,7 @@ export function loja(
   state = {
     lista: [],
     nome: "",
+    listaProdutos: [],
     entidade: new LojaModel(),
   },
   action
@@ -13,6 +14,9 @@ export function loja(
   switch (action.type) {
     case lojasConstantes.CARREGAR_BUSCAS_LOJAS + thrunkConstantes._FULFILLED: {
       return { ...state, lista: action.payload };
+    }
+    case lojasConstantes.CARREGAR_LISTAGEM_PRODUTOS + thrunkConstantes._FULFILLED: {
+      return { ...state, listaProdutos: action.payload };
     }
     case lojasConstantes.BUSCAR_LOJAS + thrunkConstantes._FULFILLED: {
       return { ...state, lista: action.payload };
@@ -24,9 +28,10 @@ export function loja(
       thrunkConstantes._FULFILLED: {
         let entidade = action.payload;
         return { ...state, entidade };
-        
+
       } case lojasConstantes.ADICIONAR_PRODUTO_LOJA + thrunkConstantes._FULFILLED: {
         let produto = action.payload;
+        let entidade = state.entidade;
         let produtos = entidade.produtos;
         const pos = findlastindex(produtos, (prod) => { return prod.id === produto.id });
         if (pos > -1) {
@@ -39,6 +44,7 @@ export function loja(
 
       } case lojasConstantes.REMOVER_PRODUTO_LOJA + thrunkConstantes._FULFILLED: {
         let produto = action.payload;
+        let entidade = state.entidade;
         let produtos = entidade.produtos;
         const pos = findlastindex(produtos, (prod) => { return prod.id === produto.id });
         if (pos > -1) {

@@ -17,6 +17,20 @@ class LojaController {
       payload: promise,
     };
   }
+  buscarProdutoPorModelo(modelo) {
+    return (dispatch, getState) => {
+      let promise = FetchUtils.get("/api/loja/produto/search/" + modelo);
+      return dispatch({
+        type: lojasConstantes.CARREGAR_LISTAGEM_PRODUTOS,
+        payload: promise,
+      }).then((values) => {
+        return values.map((value) => {
+          return {value: value.id, label: value.modelo}
+        })
+      }
+      );
+    };
+  }
 
   salvarLoja(loja) {
     return (dispatch, getState) => {
@@ -63,10 +77,10 @@ class LojaController {
       });
     };
   }
-  adicionaProduto(){
+  adicionaProduto() {
 
   }
-  removerProduto(){
+  removerProduto() {
 
   }
 }
