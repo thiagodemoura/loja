@@ -1,12 +1,15 @@
 import { lojasConstantes, thrunkConstantes } from "../constantes";
 import LojaModel from "../models/Loja.Model";
 import { findlastindex } from "lodash.findlastindex";
+import ProdutoModel from "../models/Produto.Model";
 
 export function loja(
   state = {
     lista: [],
     nome: "",
     listaProdutos: [],
+    selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 0, total: 0 },
+    selectedProdutoList: [],
     entidade: new LojaModel(),
   },
   action
@@ -16,7 +19,13 @@ export function loja(
       return { ...state, lista: action.payload };
     }
     case lojasConstantes.CARREGAR_LISTAGEM_PRODUTOS + thrunkConstantes._FULFILLED: {
-      return { ...state, listaProdutos: action.payload };
+      let data = action.payload;
+      const values = data ? data : [];
+      return {
+        ...state, listaProdutos: values.map((value) => {
+          return { value: value.id, label: value.modelo }
+        })
+      };
     }
     case lojasConstantes.BUSCAR_LOJAS + thrunkConstantes._FULFILLED: {
       return { ...state, lista: action.payload };

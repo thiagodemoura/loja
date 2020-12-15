@@ -21,7 +21,7 @@ export default class LojaController {
   async findProdutoByModelo(req, res) {
     const { modelo } = req.params;
     const produto = await lojaService.findProdutoByModelo(modelo);
-    res.json(produto.dataValues);
+    res.json(produto);
   }
 
   async deleteById(req, res) {

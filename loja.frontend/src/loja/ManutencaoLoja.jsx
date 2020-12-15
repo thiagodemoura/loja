@@ -55,16 +55,17 @@ export default function ManutencaoLoja() {
         <Breadcrumb.Item href="/loja">Loja</Breadcrumb.Item>
         <Breadcrumb.Item>Manutenção Loja</Breadcrumb.Item>
       </Breadcrumb>
-      <Tabs className="tabs" defaultActiveKey="Manutencao" style={{ margin: 30  }} size="large" >
-        <TabPane tab="Manutencao" key="manutencao" style={{marginTop: 15}}>
-          <Form
-            form={form}
-            {...layout}
-            name="nest-messages"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            validateMessages={validateMessages}
-          >
+      <Form
+        form={form}
+        {...layout}
+        name="nest-messages"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        validateMessages={validateMessages}
+      >
+        <Tabs className="tabs" defaultActiveKey="Manutencao" style={{ margin: 30 }} size="large" >
+          <TabPane tab="Manutencao" key="manutencao" style={{ marginTop: 15 }}>
+
             <div className="formulario">
               <Form.Item name="id" label="Id" style={{ display: 'none' }}>
                 <Input readOnly={true} />
@@ -136,18 +137,19 @@ export default function ManutencaoLoja() {
                 <Input />
               </Form.Item>
             </div>
-          </Form>
-        </TabPane>
-        <TabPane tab="Produto" key="produto" style={{marginTop: 15}}>
-          <LojaProduto />
-        </TabPane>
-      </Tabs>
-      <Button className="botao" shape="round" htmlType="submit" type="submit">
-        Salvar
+
+          </TabPane>
+          <TabPane tab="Produto" key="produto" style={{ marginTop: 15 }}>
+            <LojaProduto />
+          </TabPane>
+        </Tabs>
+        <Button className="botao" shape="round" htmlType="submit" type="submit">
+          Salvar
       </Button>
-      <Button className="botao" shape="round" href="/loja">
-        Retornar
+        <Button className="botao" shape="round" href="/loja">
+          Retornar
       </Button>
+      </Form>
     </div>
   );
 }

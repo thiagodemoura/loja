@@ -23,13 +23,8 @@ class LojaController {
       return dispatch({
         type: lojasConstantes.CARREGAR_LISTAGEM_PRODUTOS,
         payload: promise,
-      }).then((values) => {
-        return values.map((value) => {
-          return {value: value.id, label: value.modelo}
-        })
-      }
-      );
-    };
+      });
+    }
   }
 
   salvarLoja(loja) {
