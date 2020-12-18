@@ -10,8 +10,8 @@ export default class ProdutoController {
     app.route("/api/produto").get(this.findAll);
     //Apagar Registro
     app.route("/api/produto/:id").delete(this.deleteById);
-    app.route("/api/produto/search/:model").get(this.findByModel);
-    
+    app.route("/api/produto/search/:modelo").get(this.findByModel);
+
   }
 
 
@@ -21,12 +21,10 @@ export default class ProdutoController {
     res.json(produto.dataValues);
   }
 
-
-
   async findByModel(req, res) {
-    const { model } = req.params;
-    const produto = await produtoService.findByModel(model);
-    res.json(produto.dataValues);
+    const { modelo } = req.params;
+    const produto = await produtoService.findByModel(modelo);
+    res.json(produto);
   }
 
   async deleteById(req, res) {

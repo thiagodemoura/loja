@@ -14,7 +14,7 @@ export default class Produto extends Model {
         modelo: {
           type: DataTypes.STRING,
           allowNull: false,
-        }, 
+        },
         serial: {
           type: DataTypes.STRING,
           allowNull: false
@@ -32,9 +32,9 @@ export default class Produto extends Model {
           allowNull: false
         },
         observacoes: {
-            type: DataTypes.STRING,
-            allowNull: false
-          }
+          type: DataTypes.STRING,
+          allowNull: false
+        }
       },
       {
         sequelize: sequelize,
@@ -42,10 +42,15 @@ export default class Produto extends Model {
       }
     );
   }
-  static associate(models) {
+
+  static associate() {
     return this.associations = {
-      lojas: Produto.belongsToMany(Loja, {foreignKey: 'loja_id',through: 'lojas_produtos', as: 'lojas'})
+      lojas: Produto.belongsToMany(Loja, {
+        foreignKey: 'loja_id',
+        through: 'lojas_produtos', as: 'lojas'
+      })
     };
   }
+
 
 }

@@ -2,7 +2,7 @@ const { defaultSkip } = require("express-winston");
 
 import { database } from "../models/database";
 import { Op } from "sequelize";
-import Loja from "../models/loja";
+import Produto from "../models/produto";
 class LojaService {
   async findById(id) {
     const loja = await database.models.Loja.findByPk(id);
@@ -17,7 +17,13 @@ class LojaService {
     return deleted;
   }
   async findAll() {
-    const result = await database.models.Loja.findAll();
+    const result = await database.models.Loja.findAll({
+      include: [
+        {
+          association : 'produtos'
+        }
+      ]
+    });
     return result;
   }
   async save(loja) {
@@ -30,7 +36,16 @@ class LojaService {
           },
         });
       } else {
-        result = await database.models.Loja.create(loja);
+        const { produtos, ...data } = loja;
+        result = await database.models.Loja.create(data);
+
+        if (produtos && produtos.lenght > 0) {
+          produtos.forEach(produto => {
+            result.addProduto(produto)
+          });
+          
+          loja.setProdutos(produtos);
+        }
       }
       return result;
     }

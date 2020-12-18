@@ -2,6 +2,9 @@ import { lojasConstantes, thrunkConstantes } from "../constantes";
 import LojaModel from "../models/Loja.Model";
 import { findlastindex } from "lodash.findlastindex";
 import ProdutoModel from "../models/Produto.Model";
+const objectPath = require("object-path");
+
+
 
 export function loja(
   state = {
@@ -17,6 +20,20 @@ export function loja(
   switch (action.type) {
     case lojasConstantes.CARREGAR_BUSCAS_LOJAS + thrunkConstantes._FULFILLED: {
       return { ...state, lista: action.payload };
+    }
+    case lojasConstantes.SELECIONAR_PRODUTO: {
+      return { ...state, selectedProduto: { produto: action.payload } };
+    }
+    case lojasConstantes.ADICIONAR_PRODUTO_LOJA: {
+      return { ...state, selectedProduto: { produto: action.payload } };
+    }
+    case lojasConstantes.ATUALIZAR_ATRIBUTOS: {
+      let estado = state;
+      Object.keys(action.payload).forEach((att) => {
+        const value = action.payload[att]
+        objectPath.set(estado, att, value)
+      })
+      return Object.assign({}, state, estado);
     }
     case lojasConstantes.CARREGAR_LISTAGEM_PRODUTOS + thrunkConstantes._FULFILLED: {
       let data = action.payload;
@@ -38,30 +55,32 @@ export function loja(
         let entidade = action.payload;
         return { ...state, entidade };
 
-      } case lojasConstantes.ADICIONAR_PRODUTO_LOJA + thrunkConstantes._FULFILLED: {
-        let produto = action.payload;
-        let entidade = state.entidade;
-        let produtos = entidade.produtos;
-        const pos = findlastindex(produtos, (prod) => { return prod.id === produto.id });
-        if (pos > -1) {
-          produtos[pos] = produto;
-        } else {
-          produtos.push(produto);
-        }
-        let loja = Object.assign({}, state.entidade, { produtos })
-        return { ...state, entidade: loja };
-
-      } case lojasConstantes.REMOVER_PRODUTO_LOJA + thrunkConstantes._FULFILLED: {
-        let produto = action.payload;
-        let entidade = state.entidade;
-        let produtos = entidade.produtos;
-        const pos = findlastindex(produtos, (prod) => { return prod.id === produto.id });
-        if (pos > -1) {
-          produtos = produtos.splice(pos);
-        }
-        let loja = Object.assign({}, state.entidade, { produtos })
-        return { ...state, entidade: loja };
       }
+    case lojasConstantes.ADICIONAR_PRODUTO_LOJA + thrunkConstantes._FULFILLED: {
+      let produto = state.selectedProduto;
+      let entidade = state.entidade;
+      let produtos = entidade.produtos;
+      const pos = findlastindex(produtos, (prod) => { return prod.id === produto.id });
+      if (pos > -1) {
+        produtos[pos] = produto;
+      } else {
+        produtos.push(produto);
+      }
+      let loja = Object.assign({}, state.entidade, { produtos })
+      return { ...state, entidade: loja, selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 0, total: 0 } };
+    }
+
+    case lojasConstantes.REMOVER_PRODUTO_LOJA + thrunkConstantes._FULFILLED: {
+      let produto = state.selectedProduto;
+      let entidade = state.entidade;
+      let produtos = entidade.produtos;
+      const pos = findlastindex(produtos, (prod) => { return prod.id === produto.id });
+      if (pos > -1) {
+        produtos = produtos.splice(pos);
+      }
+      let loja = Object.assign({}, state.entidade, { produtos })
+      return { ...state, entidade: loja, selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 0, total: 0 } };
+    }
     default:
       return state;
   }

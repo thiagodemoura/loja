@@ -1,4 +1,5 @@
 import React from "react";
+import AsyncSelect from "react-select/async";
 import { Table, Button, InputNumber, AutoComplete, Layout } from "antd";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,35 +9,55 @@ import { lojaController } from "../controllers/LojaController";
 
 
 
+
 function LojaProduto() {
   const dispatch = useDispatch();
 
-  const onSearch = (searchText) => {
-    dispatch(lojaController.buscarProdutoPorModelo(searchText))
-  }
-  const onSelect = (value) => {
-    dispatch(lojaController.selectProduto(value))
-  }
+  const handleChangeInputNumberEntity = (name) => (value) => {
+    dispatch(lojaController.updateEntity({ [name]: value }));
+  };
+
+
   const listaProdutos = useSelector((state) => state.loja.listaProdutos);
   const selectedProduto = useSelector((state) => state.loja.selectedProduto);
   const selectedProdutoList = useSelector((state) => state.loja.selectedProdutoList);
 
+  const promiseProduto = async (searchText) => {
+    return lojaController.buscarProdutoPorModelo(searchText);
+  }
+  const selectProduto = (produto) => {
+    dispatch(lojaController.selectProduto(produto))
+  }
   //useEffect(() => {
   //  form.setFieldsValue(lojaR);
   //}, [form, lojaR]);
   return (
     <Layout>
       <Layout.Content>
-        <AutoComplete style={{ width: 200 }}
-          options={listaProdutos}
-          placeholder="Produto"
-          onSearch={onSearch}
-          onSelect={onSelect}
+        <AsyncSelect loadOptions={promiseProduto}
+          instanceId="produtolist"
+          isMulti={false}
+          cacheOptions
+          defaultOptions
+          isClearable={true}
           value={selectedProduto.produto}
-
+          getOptionLabel={(option) => {
+            return option.modelo;
+          }}
+          getOptionValue={(option) => {
+            return option.id;
+          }}
+          onChange={(option) => {
+            selectProduto(option)
+          }}
         />
-        <InputNumber id="minimo" step={1} style={{ margin: 10 }} placeholder="Minimo" value={selectedProduto.produto.total} />
-        <InputNumber id="total" step={1} placeholder="Total" value={selectedProduto.produto.quantidadeMinima} />
+        <InputNumber id="total" step={1} style={{ margin: 10 }}
+          onChange={handleChangeInputNumberEntity("selectedProduto.total")}
+          placeholder="Total" value={selectedProduto.total} />
+
+        <InputNumber id="minimo" step={1}
+          onChange={handleChangeInputNumberEntity("selectedProduto.quantidadeMinima")}
+          placeholder="Minimo" value={selectedProduto.quantidadeMinima} />
         <Button className="botaoplusminus"><PlusCircleOutlined /></Button>
         <Button className="botaoplusminus"><MinusCircleOutlined /></Button>
         <br />
