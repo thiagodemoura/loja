@@ -10,6 +10,12 @@ class LojaController {
       payload: promise,
     };
   }
+  updateEntity(obj){
+    return {
+      type: lojasConstantes.ATUALIZAR_ATRIBUTOS,
+      payload: obj,
+    };
+  }
   buscarLoja() {
     let promise = FetchUtils.get("/api/loja");
     return {
@@ -18,13 +24,14 @@ class LojaController {
     };
   }
   buscarProdutoPorModelo(modelo) {
-    return (dispatch, getState) => {
-      let promise = FetchUtils.get("/api/loja/produto/search/" + modelo);
-      return dispatch({
-        type: lojasConstantes.CARREGAR_LISTAGEM_PRODUTOS,
-        payload: promise,
-      });
-    }
+    return FetchUtils.get("/api/loja/produto/search/" + modelo);
+
+  }
+  selectProduto(produto) {
+    return {
+      type: lojasConstantes.SELECIONAR_PRODUTO,
+      payload: produto,
+    };
   }
 
   salvarLoja(loja) {
@@ -72,12 +79,7 @@ class LojaController {
       });
     };
   }
-  adicionaProduto() {
 
-  }
-  removerProduto() {
-
-  }
 }
 
 export const lojaController = new LojaController();

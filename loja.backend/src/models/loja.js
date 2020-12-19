@@ -14,7 +14,7 @@ export default class Loja extends Model {
         nome: {
           type: DataTypes.STRING,
           allowNull: false,
-        }, 
+        },
         cnpj: {
           type: DataTypes.STRING,
           allowNull: false
@@ -43,9 +43,13 @@ export default class Loja extends Model {
       }
     );
   }
-  static associate(models) {
+  static associate() {
     return this.associations = {
-      produtos: Loja.belongsToMany(Produto,{foreignKey:'loja_id', through:'lojas_produtos', as:'produtos'})
-    };   
+      produtos: Loja.belongsToMany(Produto, {
+        foreignKey: 'produto_id',
+        through: 'lojas_produtos', as: 'produtos'
+      })
+    };
   }
+
 }

@@ -13,11 +13,7 @@ export default class LojaController {
     app.route("/api/loja/produto/search/:modelo").get(this.findProdutoByModelo);
   }
 
-  async findById(req, res) {
-    const id = req.params.id;
-    const loja = await lojaService.findById(id);
-    res.json(loja.dataValues);
-  }
+
   async findProdutoByModelo(req, res) {
     const { modelo } = req.params;
     const produto = await lojaService.findProdutoByModelo(modelo);
@@ -45,9 +41,13 @@ export default class LojaController {
       res.status(400).send({ error: "Falha no Registro " });
     }
   }
-
   async findAll(req, res) {
     const result = await lojaService.findAll();
     res.send(result);
+  }
+  async findById(req, res) {
+    const id = req.params.id;
+    const loja = await lojaService.findById(id);
+    res.json(loja.dataValues);
   }
 }

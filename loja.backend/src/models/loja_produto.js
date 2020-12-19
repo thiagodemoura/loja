@@ -5,6 +5,7 @@ export default class LojaProduto extends Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
+
                 loja_id: {
                     type: DataTypes.BIGINT,
                     allowNull: false,
@@ -21,19 +22,20 @@ export default class LojaProduto extends Model {
                 },
                 quantidade_minima: {
                     type: DataTypes.BIGINT,
-                    allowNull: false,    
+                    allowNull: false,
                 },
+
                 quantidade: {
                     type: DataTypes.BIGINT,
                     allowNull: false,
                 },
-                
+
             },
             {
                 sequelize: sequelize,
                 modelName: "lojas_produto",
-              }
+            }
         );
-        
+
     }
 }
