@@ -6,6 +6,7 @@ import { lojaController } from "../controllers/LojaController";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import LojaProduto from "./LojaProduto";
+import ButtonGroup from "antd/lib/button/button-group";
 
 const { TabPane } = Tabs;
 
@@ -143,12 +144,13 @@ export default function ManutencaoLoja() {
             <LojaProduto />
           </TabPane>
         </Tabs>
-        <Button className="botao" shape="round" htmlType="submit" type="submit">
-          Salvar
+        <ButtonGroup>
+          <Button className="botao" shape="round" htmlType="submit" type="submit">
+            Salvar
       </Button>
-        <Button className="botao" shape="round" href="/loja">
-          Retornar
-      </Button>
+          <Button className="botao" shape="round" href="/loja">
+            Retornar
+      </Button></ButtonGroup>
       </Form>
     </div>
   );
