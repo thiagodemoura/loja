@@ -27,16 +27,7 @@ function LojaProduto() {
     dispatch(lojaController.selectProduto(produto))
   }
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      dispatch(
-        lojaController.onSelect(
-          selectedRows.map((m) => m.id),
-          true
-        )
-      );
-    }
-  };
+
   //useEffect(() => {
   //  form.setFieldsValue(lojaR);
   //}, [form, lojaR]);
@@ -69,20 +60,23 @@ function LojaProduto() {
           placeholder="Minimo" value={loja.selectedProduto.quantidadeMinima} />
         <ButtonGroup>
           <Button disabled={loja.selectedProduto.produto && loja.selectedProduto.produto.id === 0} onClick={(e) => { dispatch(lojaController.addToList()); }}><PlusCircleOutlined /></Button>
-          <Button disabled={loja.selectedProduto.produto && loja.selectedProduto.produto.id === 0} onClick={(e) => { dispatch(lojaController.removeFromList()); }}><MinusCircleOutlined /></Button>
         </ButtonGroup>
         <br />
-        <Table rowKey={(record) => { return record.produto.id }} dataSource={loja.entidade.produtos} rowSelection={rowSelection}>
+        <Table rowKey={(record) => { return record.produto.id }} dataSource={loja.entidade.produtos} >
 
           <Table.Column title="Produto" dataIndex="produto" key="produto" render={(text, record, index) => {
             return record.produto.modelo
           }} />
           <Table.Column title="Quantidade Minima" dataIndex="quantidadeMinima" key="quantidadeMinima" />
           <Table.Column title="Total" dataIndex="total" key="total" />
+          <Table.Column title="Ação" render={(text, record, index) => {
+            return (
+              <Button onClick={(e) => { dispatch(lojaController.removeFromList(record.produto)); }}><MinusCircleOutlined /></Button>)
+          }} />
         </Table>
       </Layout.Content>
 
-    </Layout >
+    </Layout>
   );
 }
 

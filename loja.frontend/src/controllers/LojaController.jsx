@@ -84,18 +84,13 @@ class LojaController {
       type: lojasConstantes.ADICIONAR_PRODUTO_LOJA,
     };
   }
-  removeFromList() {
+  removeFromList(produto) {
     return {
       type: lojasConstantes.REMOVER_PRODUTO_LOJA,
+      payload: produto
     };
   }
 
-  onSelect(rows, isSelected) {
-    return {
-      type: lojasConstantes.SELECT_PRODUCT_ROWS,
-      payload: { rows, isSelected }
-    };
-  }
 }
 
 export const lojaController = new LojaController();

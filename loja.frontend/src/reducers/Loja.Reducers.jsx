@@ -1,6 +1,7 @@
 import { lojasConstantes, thrunkConstantes } from "../constantes";
 import LojaModel from "../models/Loja.Model";
 import findlastindex from "lodash.findlastindex";
+import remove from "lodash.remove";
 import ProdutoModel from "../models/Produto.Model";
 const objectPath = require("object-path");
 
@@ -12,7 +13,6 @@ export function loja(
     nome: "",
     listaProdutos: [],
     selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 1, total: 1 },
-    selectedProdutoList: [],
     entidade: new LojaModel(),
   },
   action
@@ -57,40 +57,30 @@ export function loja(
 
       }
     case lojasConstantes.ADICIONAR_PRODUTO_LOJA: {
-      let produto = state.selectedProduto;
-      let entidade = state.entidade;
-      let produtos = entidade.produtos ? entidade.produtos : [];
-      const pos = findlastindex(produtos, { id: produto.id });
+      let produtoSel = state.selectedProduto;
+      let entidadeOld = state.entidade;
+      let produtos = entidadeOld.produtos ? entidadeOld.produtos : [];
+      const pos = findlastindex(produtos, (lojaProd) => { return lojaProd.produto.id === produtoSel.produto.id });
       if (pos > -1) {
-        produtos[pos] = produto;
+        produtos[pos] = produtoSel;
       } else {
-        produtos.push(produto);
+        produtos.push(produtoSel);
       }
-      let loja = Object.assign({}, state.entidade, { produtos })
-      return { ...state, entidade: loja, selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 0, total: 0 } };
+      let entidade = Object.assign({}, entidadeOld, { produtos })
+      let newState = Object.assign({}, state, { entidade }, { selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 0, total: 0 } })
+      return { ...newState };
     }
 
     case lojasConstantes.REMOVER_PRODUTO_LOJA: {
-      let produto = state.selectedProduto;
+      let produtoSel = action.payload;
       let entidade = state.entidade;
       let produtos = entidade.produtos ? entidade.produtos : [];
-      const pos = findlastindex(produtos, { id: produto.id });
-      if (pos > -1) {
-        produtos = produtos.splice(pos);
-      }
+      produtos = remove(produtos, (lojaProd) => { return lojaProd.produto.id !== produtoSel.id });
+
       let loja = Object.assign({}, state.entidade, { produtos })
       return { ...state, entidade: loja, selectedProduto: { produto: new ProdutoModel(), quantidadeMinima: 0, total: 0 } };
     }
-    case lojasConstantes.SELECT_PRODUCT_ROWS: {
-      let selected = [];
-      if (action.payload.rows.length > 0) {
-        selected = action.payload.rows;
-      } else {
-        selected = [];
-      }
 
-      return { ...state, selectedProdutoList: selected };
-    }
     default:
       return state;
   }
